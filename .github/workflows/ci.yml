@@ -9,14 +9,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      GOAL_TEST_SKILLS_ROOT: ${{ github.workspace }}/.ci-skills
+      GOAL_TEST_SKILLS_ROOT: ${{ github.workspace }}
       GOAL_TEST_GLOBAL_AGENTS: ${{ github.workspace }}/deployment/AGENTS.md
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: mkdir -p .ci-skills && ln -s "$GITHUB_WORKSPACE/goal" .ci-skills/goal
       - run: python -B -m pip install pytest
       - run: python -B -m pytest --rootdir . -p no:cacheprovider goal/scripts -q
       - run: python -B goal/scripts/validate_goal_skill.py goal
