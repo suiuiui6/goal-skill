@@ -49,5 +49,5 @@ compatibility evidence; only the Fullstack integration manifest owns current-HEA
 - Full-stack fixtures prove only the isolated combinations they execute.
 - Missing live Agent+Skill observation remains `not-run`.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and
-[CHANGELOG.md](CHANGELOG.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md),
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [CHANGELOG.md](CHANGELOG.md).
