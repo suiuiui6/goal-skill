@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "canonical_repository": "https://github.com/suiuiui6/goal-skill",
+  "package_path": "goal",
+  "contract": "goal-protocol-v2",
+  "companions": [
+    {
+      "name": "harness-engineering",
+      "repository": "https://github.com/suiuiui6/harness-engineering-skill",
+      "ref": "master",
+      "tested_commit": "c40880f6406509838e41cad54422bea3792663af"
+    }
+  ],
+  "integration_consumers": [
+    {
+      "name": "goal-harness-web-fullstack",
+      "repository": "https://github.com/suiuiui6/goal-harness-web-fullstack",
+      "ref": "main",
+      "manifest_path": "tools/source-integrations.json"
+    }
+  ]
+}

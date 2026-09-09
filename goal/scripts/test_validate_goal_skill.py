@@ -18,9 +18,10 @@ from unittest.mock import patch
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-GLOBAL_AGENTS = (
-    SKILL_ROOT.parent / "candidate-AGENTS.md"
-    if (SKILL_ROOT.parent / "candidate-AGENTS.md").exists()
+CONFIGURED_GLOBAL_AGENTS = os.environ.get("GOAL_TEST_GLOBAL_AGENTS")
+GLOBAL_AGENTS = Path(CONFIGURED_GLOBAL_AGENTS).resolve() if CONFIGURED_GLOBAL_AGENTS else (
+    SKILL_ROOT.parent / "deployment" / "AGENTS.md"
+    if (SKILL_ROOT.parent / "deployment" / "AGENTS.md").exists()
     else Path.home() / ".codex" / "AGENTS.md"
 )
 ALLOWED_TOP_LEVEL = {"SKILL.md", "references", "scripts", "evals"}

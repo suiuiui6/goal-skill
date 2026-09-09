@@ -1,80 +1,52 @@
-# Goal Harness
+# Goal Skill
 
-[![CI](https://github.com/suiuiui6/goal-harness-web-fullstack/actions/workflows/ci.yml/badge.svg)](https://github.com/suiuiui6/goal-harness-web-fullstack/actions/workflows/ci.yml)
+[![CI](https://github.com/suiuiui6/goal-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/suiuiui6/goal-skill/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Evidence-first delivery governance for AI coding agents.
+Project intake and governance routing for evidence-first AI coding delivery.
 
-> 中文：Goal Harness 为 AI 编码 Agent 提供证据优先的项目交付治理。它会区分
-> 静态契约、真实事件回放与隔离全栈验证，拒绝把过期证据、Mock 或单纯退出码 0
-> 当作真实交付成功。
+> 中文：Goal Skill 负责项目目标接收、bootstrap/maintenance 分类、起始层选择、
+> 用户确认门禁和结构化关闭。它不会取代 Harness 的分层执行，也不会把静态检查、
+> synthetic 记录或退出码 0 冒充真实交付证据。
 
-Goal Harness helps an agent distinguish a real, revalidated delivery result
-from a green-looking command. It combines Goal intake, Harness execution
-references, and Guard-enforced state transitions for Web full-stack work.
+## Repository role
 
-## Why it exists
+This repository is the canonical public source for the `goal` Codex Skill.
+The installable package lives in [`goal/`](goal/).
 
-AI coding workflows often report success when evidence is stale, a mock replaced
-the real API, or a dependency is incompatible. Goal Harness makes those cases
-machine-checkable while preserving legacy runs and explicit scope decisions.
+- [goal-skill](https://github.com/suiuiui6/goal-skill) owns Goal intake, protocol, capability discovery, and handoff.
+- [harness-engineering-skill](https://github.com/suiuiui6/harness-engineering-skill) owns layer execution, gates, rollback, and closure.
+- [goal-harness-web-fullstack](https://github.com/suiuiui6/goal-harness-web-fullstack) owns version-pinned integration, Guard/Delivery contracts, full-stack fixtures, and release evidence.
 
-## Quick start
+These repositories complement each other and do not conflict. Goal hands approved
+project work to Harness; the Fullstack repository verifies the compatible combination.
 
-```powershell
-git clone https://github.com/suiuiui6/goal-harness-web-fullstack.git
-cd goal-harness-web-fullstack
-python -m goal_harness --help
-python -m goal_harness validate --root .
-python -m goal_harness capability-check --root .
-python -m goal_harness delivery-audit --root .
-```
+## Validate
 
-The CLI delegates to the existing validators and Guard; it does not create a
-second rules engine. Windows enforcement is `audit-only-windows`: audits are
-required evidence, but unavailable lifecycle hooks are never described as
-mechanical blocking.
-
-## Evidence levels
-
-- `contract`: structure, ownership, links, and rule invariants.
-- `event_replay`: observed read/tool/judgment events; synthetic records do not
-  count as observed behavior.
-- `fullstack_fixture`: isolated page/API/SQLite/auth behavior.
-
-Missing observed input remains `not-run`. A passing process exit code alone does
-not prove delivery correctness.
-
-## Project map
-
-| Path | Purpose |
-| --- | --- |
-| `source/goal` | project intake, protocol, capability routing |
-| `source/harness-engineering` | execution loading, gates, rollback, closure |
-| `source/goal-enforcement` | delivery contract, Guard, state transitions |
-| `fixtures/web-notes` | local page/API/SQLite fixture |
-| `goal_harness` | public CLI |
-
-## Development
+Clone the repository and validate the package before installing only `goal/` as the
+Codex Skill directory:
 
 ```powershell
-python -B -m pytest --rootdir . -p no:cacheprovider tests -q
-python -B -m pytest --rootdir . -p no:cacheprovider source/goal-enforcement/tests -q
-python -B -m pytest --rootdir . -p no:cacheprovider source/goal/scripts -q
-python -B -m pytest --rootdir . -p no:cacheprovider source/harness-engineering/scripts -q
+python -B goal/scripts/validate_goal_skill.py goal
+python -B -m pytest --rootdir . -p no:cacheprovider goal/scripts -q
 ```
+
+Governed mutation and delivery modes additionally require a compatible Harness Skill
+and Goal Guard. Windows enforcement is `audit-only-windows`; unavailable hooks are
+never claimed as mechanical blocking.
+
+## Integration contract
+
+Machine-readable relationships are recorded in [`integrations.json`](integrations.json).
+The Fullstack repository pins an exact Goal commit before integration testing,
+preventing silent source drift.
+
+## Evidence boundaries
+
+- Contract checks prove package structure and rule invariants.
+- Recorded event replay proves only the events actually observed.
+- Full-stack fixtures prove only the isolated combinations they execute.
+- Missing live Agent+Skill observation remains `not-run`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and
-[CHANGELOG.md](CHANGELOG.md). This project is MIT licensed.
-
-## Roadmap
-
-- observed Agent+Skill trace collection with explicit consent
-- richer release automation and published examples
-- integrations for additional agent hosts without changing the core contract
-
-## Limitations
-
-This repository is a governance toolkit, not a hosted deployment platform. It
-does not connect to production systems, install dependencies automatically, or
-claim browser/agent behavior when those observations were not run.
+[CHANGELOG.md](CHANGELOG.md).

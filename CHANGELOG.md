@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 - 2026-09-09
+
+- Separated the installable `goal/` Skill package from repository documentation.
+- Added self-contained Linux CI and candidate-path test injection.
+- Added bidirectional Goal, Harness, and Fullstack integration metadata.
+- Replaced the copied Fullstack README with Goal-specific ownership and validation guidance.
+
 ## 0.1.0 - 2026-09-08
 
 - Added delivery contract validation, invalidation history, CAS writes, and
