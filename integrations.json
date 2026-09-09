@@ -8,7 +8,7 @@
       "name": "harness-engineering",
       "repository": "https://github.com/suiuiui6/harness-engineering-skill",
       "ref": "master",
-      "tested_commit": "c40880f6406509838e41cad54422bea3792663af"
+      "tested_commit": "17b42f87915cf990adc9de3fc837da699e4ee253"
     }
   ],
   "integration_consumers": [

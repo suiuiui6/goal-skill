@@ -39,7 +39,8 @@ never claimed as mechanical blocking.
 
 Machine-readable relationships are recorded in [`integrations.json`](integrations.json).
 The Fullstack repository pins an exact Goal commit before integration testing,
-preventing silent source drift.
+preventing silent source drift. Companion `tested_commit` values record known
+compatibility evidence; only the Fullstack integration manifest owns current-HEAD pins.
 
 ## Evidence boundaries
 

@@ -23,10 +23,6 @@ def main() -> int:
         tested = entry.get("tested_commit")
         if tested and (len(tested) != 40 or any(ch not in "0123456789abcdef" for ch in tested)):
             errors.append(f"invalid tested commit: {entry['name']}")
-        elif tested and observed != tested:
-            errors.append(
-                f"integration drift for {entry['name']}: expected {tested}, observed {observed}"
-            )
     if errors:
         print("\n".join(errors))
         return 1
