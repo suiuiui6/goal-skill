@@ -72,13 +72,3 @@ python $env:USERPROFILE\plugins\goal-enforcement\scripts\goal_guard.py audit --w
 python $env:USERPROFILE\plugins\goal-enforcement\scripts\goal_guard.py resolve-failure --workspace <workspace> --failure-id <id> --evidence "<root cause and re-verification evidence>"
 python $env:USERPROFILE\plugins\goal-enforcement\scripts\goal_guard.py recover-reservation --workspace <workspace> --reservation-id <id> --evidence "<crash/interruption investigation evidence>"
 ```
-
-### Delivery state handoff
-
-For a new delivery profile, callers read the exact raw bytes of
-`.codex/goal-state.json`, compute SHA-256, and pass it to `write-state` as
-`--expected-state-sha256 <digest>`. Guard compares that digest while holding
-the state lock and rejects an absent, malformed, or stale digest. After a
-rejection, re-read the raw state and digest, rebuild the candidate from that
-current state, then retry through Guard. Legacy calls keep their existing
-arguments and do not require CAS.

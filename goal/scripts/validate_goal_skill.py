@@ -169,21 +169,9 @@ REQUIRED_BEHAVIOR_EVAL_IDS = {
     "guard-capability-version-match",
     "guard-capability-version-mismatch",
     "deferred-host-discovery",
-    "delivery-entry-missing-feature",
-    "delivery-legacy-no-feature",
-    "delivery-entry-feature-supported",
 }
 
 BEHAVIOR_EXPECTED_OUTPUT_SEMANTICS = {
-    "delivery-entry-missing-feature": {
-        "all": ("capability_disabled", "dependency goal-guard", "do not initialize-state", "write delivery"),
-    },
-    "delivery-legacy-no-feature": {
-        "all": ("legacy", "without requiring", "web-fullstack-delivery-v1"),
-    },
-    "delivery-entry-feature-supported": {
-        "all": ("feature check passes", "delivery initialization", "continue"),
-    },
     "goal-intake-no-objective": {
         "all": ("goal-intake", "ask only", "missing project objective", "do not classify", "load harness", "create or mutate goal state"),
     },
@@ -378,11 +366,9 @@ def validate_skill_text(root: Path, errors: list[str]) -> None:
         return
 
     text = load_text(skill_md)
-    # Report hot-path size for observability; do not impose an arbitrary
-    # line-count gate. Loading behavior is validated by route/event checks.
     line_count = len(text.splitlines())
-    if line_count <= 0:
-        errors.append("SKILL.md must not be empty")
+    if line_count > 135:
+        errors.append(f"SKILL.md too long for hot path ({line_count} lines > 135)")
 
     if not text.startswith("---\n") or "\nname: goal\n" not in text:
         errors.append("SKILL.md must have frontmatter with name: goal")

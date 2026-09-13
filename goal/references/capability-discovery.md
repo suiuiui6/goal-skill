@@ -16,11 +16,6 @@ checkpoints.
    `scripts/protocol.py`'s `capability_compatible()` check for the named
    dependency. Also confirm that the operation's required command, state
    schema, and enforcement mode appear in the descriptor.
-   For an explicitly requested Web full-stack delivery runtime, call
-   `delivery_feature_available()` as an additional check and require the
-   `web-fullstack-delivery-v1` feature before `initialize-state` or any write.
-   An existing legacy run without `delivery` uses the ordinary compatibility
-   check and does not require this feature.
 4. If the configured command is missing, does not recognize `capabilities`,
    or reports an incompatible descriptor, try the documented legacy Guard
    path once: `$env:USERPROFILE\plugins\goal-enforcement\scripts\goal_guard.py`.
@@ -43,23 +38,18 @@ mechanically blocked a mutation or completion.
 
 ## Successful Compatibility Reply
 
-When the configured `capabilities` lookup succeeds, report the selected
-dependency, the observed protocol-major compatibility result, state schema,
-required command, enforcement mode, and whether the same operation continues.
-The report must identify protocol major 1, schema 1, the required command,
-and the selected dependency's compatibility result; it may describe the
-protocol checker generically rather than requiring a fixed script name.
-For a Web delivery request also report the observed
-`web-fullstack-delivery-v1` feature check. Do not try the legacy candidate
-after a successful compatible lookup and do not emit a blocker.
+When the configured `capabilities` lookup succeeds, the user-facing reply must
+explicitly state that it selected `goal-guard`; `scripts/protocol.py` checked
+protocol major 1 and found it compatible; state schema 1, the required command
+(for the capability eval, `write-state`), and `audit-only-windows` are present;
+and the same operation continues. Do not try the legacy candidate and do not
+emit a blocker after this successful result.
+The reply is incomplete if it omits `scripts/protocol.py` or paraphrases away
+that the same operation continues.
 
 ```text
-Compatibility: The configured capabilities lookup selected goal-guard. The protocol compatibility check found major 1, state schema 1, required command write-state, and enforcement mode audit-only-windows; the requested delivery feature check is [present|absent].
-Next action: [Continue the same operation|Block before initialization or write with CAPABILITY_DISABLED]. Do not try an unneeded legacy candidate after a successful lookup; when continuing, state that the same operation continues, the legacy candidate is not tried, and no blocker is emitted.
-
-For a selected but feature-incomplete Guard, return `CAPABILITY_DISABLED` with
-`Dependency: goal-guard`; do not initialize, write `delivery`, or silently
-continue as legacy. Preserve the exact descriptor and command result.
+Compatibility: The configured capabilities lookup selected goal-guard. scripts/protocol.py checked protocol major 1 and found it compatible; state schema 1, required command write-state, and enforcement mode audit-only-windows are present.
+Next action: Continue the same operation. Do not try the legacy candidate and do not emit a blocker.
 ```
 
 ## Incompatible Candidate Evidence

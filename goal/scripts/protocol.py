@@ -240,27 +240,3 @@ def capability_compatible(
         and isinstance(descriptor.get("protocol_version"), int)
         and not isinstance(descriptor.get("protocol_version"), bool)
     )
-
-
-def delivery_feature_available(
-    contract: dict[str, Any], descriptor: Any
-) -> bool:
-    """Return whether the selected Guard supports Web full-stack delivery v1."""
-
-    if not capability_compatible(contract, "guard", descriptor):
-        return False
-    features = descriptor.get("features")
-    schemas = descriptor.get("state_schema_versions")
-    commands = descriptor.get("commands")
-    modes = descriptor.get("enforcement_modes")
-    return (
-        isinstance(features, list)
-        and all(isinstance(item, str) for item in features)
-        and "web-fullstack-delivery-v1" in features
-        and isinstance(schemas, list)
-        and 1 in schemas
-        and isinstance(commands, list)
-        and {"initialize-state", "write-state", "audit"}.issubset(commands)
-        and isinstance(modes, list)
-        and "audit-only-windows" in modes
-    )

@@ -18,33 +18,10 @@ PROTOCOL_MODULE = importlib.util.module_from_spec(PROTOCOL_SPEC)
 PROTOCOL_SPEC.loader.exec_module(PROTOCOL_MODULE)
 
 capability_compatible = PROTOCOL_MODULE.capability_compatible
-delivery_feature_available = PROTOCOL_MODULE.delivery_feature_available
 load_contract = PROTOCOL_MODULE.load_contract
 required_fields = PROTOCOL_MODULE.required_fields
 transition_allowed = PROTOCOL_MODULE.transition_allowed
 validate_contract = PROTOCOL_MODULE.validate_contract
-
-
-def test_delivery_feature_requires_complete_descriptor(contract):
-    descriptor = {
-        "capability": "goal-guard",
-        "protocol_version": 1,
-        "state_schema_versions": [1],
-        "commands": ["initialize-state", "write-state", "audit"],
-        "enforcement_modes": ["audit-only-windows"],
-        "features": ["web-fullstack-delivery-v1"],
-    }
-    assert delivery_feature_available(contract, descriptor)
-    for field in ("features", "commands", "state_schema_versions", "enforcement_modes"):
-        missing = copy.deepcopy(descriptor)
-        missing[field] = []
-        assert not delivery_feature_available(contract, missing)
-
-
-def test_delivery_feature_rejects_major_only_descriptor(contract):
-    descriptor = {"capability": "goal-guard", "protocol_version": 1}
-    assert capability_compatible(contract, "guard", descriptor)
-    assert not delivery_feature_available(contract, descriptor)
 
 
 EXPECTED_PHASES = [
