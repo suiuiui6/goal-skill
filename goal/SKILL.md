@@ -6,6 +6,10 @@ compatibility: "Project execution requires the installed harness-engineering ski
 
 # /goal — Project Engineering Entry Point
 
+This project entry covers Web full-stack delivery across frontend, backend,
+data, and deployment surfaces. A focused local API change remains a narrow
+maintenance task and is not upgraded to a full bootstrap.
+
 Receive a project goal, classify it, load the execution method at the correct time, proceed with evidence, and close with a structured record.
 
 ## Core Rule
@@ -40,7 +44,19 @@ Before the first active classification reply, read only `references/protocol.jso
 
 ### Stage 3: Load Harness
 
-Load `harness-engineering` after classification and required confirmation. Read `harness-engineering/references/runtime-stages.md` first and follow its Load section before planning or project work. In Codex, read `harness-engineering/core/flow.md`, `harness-engineering/adapters/codex/host-map.md`, `harness-engineering/core/checklists.md`, and `harness-engineering/core/exit-and-reentry.md`. Use `harness-engineering/references/output-contract.md` for Harness gates and closure. If Harness or a required reference is unavailable, return the Dependency Blocker Reply and do not improvise.
+Load `harness-engineering` after classification and required confirmation;
+follow its load section and use `harness-engineering/references/output-contract.md`.
+After classification and required confirmation, hand execution to Harness.
+Harness alone owns execution-reference loading through its runtime-stages
+entry. Goal does not enumerate Harness checklists, rollback references, or
+specialist execution reads. Do not load delivery execution details during
+the classification-only turn. Read applicable safety constraints before the
+corresponding operation. If Harness or a required reference is unavailable,
+return the Dependency Blocker Reply and do not improvise.
+The handoff follows `harness-engineering/references/runtime-stages.md` and
+its `core/flow.md`, `core/checklists.md`, `core/exit-and-reentry.md`, and
+Codex `adapters/codex/host-map.md` references as applicable; these are not
+loaded during classification-only turns.
 
 Before the first Harness layer gate reply, do not invoke `brainstorming`; Layer 0 itself owns the first design and clarification pass. Do not create workspace-local goal state before the first Harness layer gate reply. Do not create `.codex/goal-state.lock`. Do not create `.codex/goal-state.candidate.json` before that gate or progress checkpoint. Defer native Codex goal state checks until after the first Harness layer gate reply or progress checkpoint. After the first Layer 0 evidence sweep, return a gate or checkpoint before drafting boundary documents or other local artifacts. Load `references/host-modes.md` before the first governed mutation; that cold path owns Guard state initialization and enforcement details.
 

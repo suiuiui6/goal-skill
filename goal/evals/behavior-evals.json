@@ -1,6 +1,24 @@
-{
+  {
   "skill_name": "goal",
   "evals": [
+  {
+    "id": "delivery-entry-missing-feature",
+    "prompt": "A Web full-stack delivery request discovers a compatible Guard without web-fullstack-delivery-v1.",
+    "expected_output": "CAPABILITY_DISABLED Dependency goal-guard; do not initialize-state or write delivery.",
+    "files": []
+  },
+  {
+    "id": "delivery-legacy-no-feature",
+    "prompt": "An existing legacy run without delivery discovers a Guard without the delivery feature.",
+    "expected_output": "Legacy compatibility continues without requiring web-fullstack-delivery-v1.",
+    "files": []
+  },
+  {
+    "id": "delivery-entry-feature-supported",
+    "prompt": "A Web full-stack delivery request discovers a compatible Guard advertising web-fullstack-delivery-v1.",
+    "expected_output": "Feature check passes and delivery initialization may continue.",
+    "files": []
+  },
     {
       "id": "goal-intake-no-objective",
       "prompt": "/goal",

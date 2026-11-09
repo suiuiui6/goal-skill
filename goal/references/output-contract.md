@@ -143,7 +143,7 @@ Evidence: `[exact lookup command 1]` returned `[exact result 1]`; `[exact lookup
 
 When Guard discovery succeeds, report the compatibility decision explicitly:
 `scripts/protocol.py` checked the selected `goal-guard` descriptor and reported
-protocol major 1 compatible. Also report state schema 1, the required
+protocol compatibility: protocol major 1 compatible. Also report state schema 1, the required
 `write-state` command, and `audit-only-windows`. Continue the same operation and
 do not use the legacy candidate or emit a blocker.
 
