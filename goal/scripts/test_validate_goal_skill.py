@@ -18,11 +18,19 @@ from unittest.mock import patch
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-GLOBAL_AGENTS = (
-    SKILL_ROOT.parent / "candidate-AGENTS.md"
-    if (SKILL_ROOT.parent / "candidate-AGENTS.md").exists()
-    else Path.home() / ".codex" / "AGENTS.md"
-)
+
+
+def _global_agents_path() -> Path:
+    override = os.environ.get("GOAL_TEST_GLOBAL_AGENTS")
+    if override:
+        return Path(override)
+    candidate = SKILL_ROOT.parent / "candidate-AGENTS.md"
+    if candidate.exists():
+        return candidate
+    return Path.home() / ".codex" / "AGENTS.md"
+
+
+GLOBAL_AGENTS = _global_agents_path()
 ALLOWED_TOP_LEVEL = {"SKILL.md", "references", "scripts", "evals"}
 VALIDATOR = SKILL_ROOT / "scripts" / "validate_goal_skill.py"
 DEPLOYMENT_AGENTS = SKILL_ROOT.parent / "deployment" / "AGENTS.md"
